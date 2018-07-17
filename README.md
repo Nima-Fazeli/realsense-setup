@@ -112,6 +112,14 @@ catkin_make -DCATKIN_ENABLE_TESTING=False -DCMAKE_BUILD_TYPE=Release
 catkin_make install
 ```
 
-Important note, at this point hopefully you can run the roslaunch files. The visualization is then using `rviz`, you run one of the launch files then launch `rviz`. In `rviz`, you need to first specify the `map link` as the `camera_link`, then add `pointcloud2`.
+At this point hopefully you can run 
+```
+roslaunch realsense2_camera rs_rgbd.launch
+```
+To do the visualization, you need to manually call `rviz`:
+```
+rviz
+```
+In `rviz`, you need to first specify `Global Options/Fixed Frame` as the `camera_link`, then add `pointcloud2` topic.
 
 
