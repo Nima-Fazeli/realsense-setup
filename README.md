@@ -1,6 +1,8 @@
 # Realsense Camera D Series Setup & NVIDIA GPU Driver Setup:
 
-This repository contains my findings in setting up a Realsense D Series camera from scratch. The idea is to refer to this guide later down the line to redo things efficiently. Things you'll need:
+# Realsense Camera D Series Setup:
+
+Here are some helpful steps to set up a Realsense D Series camera from scratch. The guide should be self contained and not too much knowledge is required to get things working, but if you have suggestions for improvements, please contact me. Things you'll need:
 
 1. Ubuntu 16.04
 2. Kernel 4.13
@@ -13,11 +15,54 @@ An important reference is the [ROS Wrapper for Real Sense Devices Github page](h
 ## Pre-requisits
 
 ### Operating system and Kernel
-I have only been successful in getting the realsense to work reliably on `Ubuntu 16.04`, it may work on other versions (it is supposed to work on 14.04) but not sure right now. Further, the most stable version of the realsense package requires `kernel 4.13`.
+I have only been successful in getting the realsense to work reliably on `Ubuntu 16.04`, it may work on other versions (it is supposed to work on 14.04) but not sure right now. Further, the most stable version of the realsense package requires `kernel 4.13`, I use the latest `4.13`. Things should, at least in theory, also work on `4.10`.
 
 Here are two methods to get Kernel 4.13 installed (second one may be easier):
 
-#### Method 1:
+#### Method 1 (Easier):
+
+Update and prepare the OS:
+```
+sudo apt update
+sudo apt upgrade -y
+sudo reboot
+poweroff
+```
+Check your current kernel installation:
+```
+uname -msr
+```
+You'll probably get `Linux 4.4.0-78-generic x86_64`, which means you're running kernel 4.4.
+
+Install `ukuu` by:
+```
+sudo add-apt-repository ppa:teejee2008/ppa
+sudo apt-get update && sudo apt-get install ukuu
+```
+Run ukuu as an application, then browse to find the kernel you want and install it. Once done, run:
+```
+sudo poweroff
+```
+The poweroff is important because you need to power cycle and a reboot does not always do the job. Now check your current kernel installation:
+```
+uname -msr
+```
+At this point you have Ubuntu 16.04, ROS, and kernel 4.13, you're ready to move on. If the kernel did not update and you have a newer kernel, you need to downgrade, follow the steps below:
+
+If you need to downgrade your kernel instead of upgrade, you can follow the instruction in this [how to](https://www.makeuseof.com/tag/upgrade-kernel-ukuu-ubuntu/), but in short, you need to install the desired Kernel from ukuu, then do this:
+```
+sudo nano /etc/default/grub
+```
+Comment out the `GRUB_HIDDEN_TIMEOUT` and `GRUB_HIDDEN_TIMEOUT_QUITE` lines using `#`, then run:
+```
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+```
+Then when you reboot, in the boot selection screen in Ubuntu, select `Advanced options for Ubuntu`, then select the correct kernel you want to boot up in.
+
+You can also clean up after and remove the kernels you don't want. 
+
+
+#### Method 2 (Manual and a little involved):
 
 Update and prepare the OS:
 ```
@@ -57,31 +102,6 @@ The poweroff is important because it seems reboot doesnt always trigger the nece
 
 You can also download the kernel and place it in the folder you made and run it as an installer, then repeat the previous steps.
 
-#### Method 2:
-Install `ukuu` by:
-```
-sudo add-apt-repository ppa:teejee2008/ppa
-sudo apt-get update && sudo apt-get install ukuu
-```
-Run ukuu as an application, then browse to find the kernel you want and install it. Once done, run:
-```
-sudo poweroff
-```
-
-At this point you have Ubuntu 16.04, ROS, and kernel 4.13, you're ready to move on.
-
-If you need to downgrade your kernel instead of upgrade, you can follow the instruction in this [how to](https://www.makeuseof.com/tag/upgrade-kernel-ukuu-ubuntu/), but in short, you need to install the desired Kernel from ukuu, then do this:
-```
-sudo nano /etc/default/grub
-```
-Comment out the `GRUB_HIDDEN_TIMEOUT` and `GRUB_HIDDEN_TIMEOUT_QUITE` lines using `#`, then run:
-```
-sudo grub-mkconfig -o /boot/grub/grub.cfg
-```
-Then when you reboot, in the boot selection screen in Ubuntu, select `Advanced options for Ubuntu`, then select the correct kernel you want to boot up in.
-
-You can also clean up after and remove the kernels you don't want. 
-
 ### Software libraries
 
 The most important library is `librealsense2`, go to the [librealsense2 github page](https://github.com/IntelRealSense/librealsense/blob/master/doc/distribution_linux.md#installing-the-packages), and follow the instructions, you may need to install some additionally libraries, I'll try to make a list of the things you may need:
@@ -117,22 +137,43 @@ Once done with the above steps, go to the [ROS RealSense Wrapper Github page](ht
 
 IMPORTANT: Once done with this step it is worth rebooting, you may find you need to reboot several times during the steps here, that is to be expected.
 
-IMPORTANT: I first cloned this package, then noticed some dependencies and issues, and after fixing each, I found it was necessary to keep running `catkin_make` as:
+TLDR: In short you need to:
 ```
+cd ~/PATH_TO/catkin_ws/src
+git clone git@github.com:intel-ros/realsense.git
+
+catkin_init_workspace
+cd ..
 catkin_make clean
 catkin_make -DCATKIN_ENABLE_TESTING=False -DCMAKE_BUILD_TYPE=Release
 catkin_make install
 ```
-
-At this point hopefully you can run 
+and don't forget to source:
+```
+echo "source ~/PATH_TO/catkin_ws/devel/setup.bash" >> ~/.bashrc
+source ~/.bashrc
+```
+Now to make sure you can do RGBD you need to run:
+```
+sudo apt install ros-kinetic-rgbd-launch
+```
+At this point you can run 
+```
+roslaunch realsense2_camera rs_camera.launch
+```
+To stream the camera RGB data or: 
 ```
 roslaunch realsense2_camera rs_rgbd.launch
 ```
+To stream the RGBD data.
+
 To do the visualization, you need to manually call `rviz`:
 ```
 rviz
 ```
-In `rviz`, you need to first specify `Global Options/Fixed Frame` as the `camera_link`, then add `pointcloud2` topic.
+In `rviz`, you need to first specify `Global Options/Fixed Frame` as the `camera_link`, then add `camera` topic to visualize the RGB image or `pointcloud2` topic to visualize the RGBD topic. In regards to RGBD visulization, I found its better to set the `style` to `points` and the size to be 3 pixels for the best look. The camera does not see depth from a close shot, so it's probably best to try to look at a scene from about 50 cms or so.
+
+
 
 
 # NVIDIA Graphic Card Setup on Ubuntu
