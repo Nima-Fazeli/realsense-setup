@@ -1,4 +1,4 @@
-# Realsense Camera D Series Setup:
+# Realsense Camera D Series Setup & NVIDIA GPU Driver Setup:
 
 This repository contains my findings in setting up a Realsense D Series camera from scratch. The idea is to refer to this guide later down the line to redo things efficiently. Things you'll need:
 
@@ -122,4 +122,48 @@ rviz
 ```
 In `rviz`, you need to first specify `Global Options/Fixed Frame` as the `camera_link`, then add `pointcloud2` topic.
 
+
+# NVIDIA Graphic Card Setup on Ubuntu
+
+If you have a fresh machine with a fancy GPU, such as a 1080TI, here are the steps to set up a new graphics card. For reference, I used (this page)[https://blog.nelsonliu.me/2017/04/29/installing-and-updating-gtx-1080-ti-cuda-drivers-on-ubuntu/]
+
+## 1. Install Ubuntu
+
+Create a bootable Ubuntu installation USB, for example [how to do it on Ubuntu](https://tutorials.ubuntu.com/tutorial/tutorial-create-a-usb-stick-on-ubuntu#0).
+
+Then in the bios setup the boot to prioritze the USB and then install Ubuntu.
+
+## 2. Configure Integrated Graphics Card
+
+The Ubuntu installation does not come with drivers to support the graphics card, so booting up will results in a blank screen. The solution is to configure the bios to use the integrated graphics card. In this instance you enable both iGPU and the GPU.
+
+## 3. Driver Installation
+
+The easy was is to do this:
+```
+sudo add-apt-repository ppa:graphics-drivers/ppa
+sudo apt-get update
+```
+The you want to go to the (Binary Driver How To for NVIDIA)[https://help.ubuntu.com/community/BinaryDriverHowto/Nvidia], and check the latest driver number, as of the date of this guide it was 390, then do this:
+```
+sudo apt-get install nvidia-390
+```
+This will install the drivers. Cool, now you need to reboot, I prefer to power off:
+```
+poweroff
+```
+Then boot back into Ubuntu and then you can run the follow:
+```
+nvidia-settings
+nvidia-smi
+```
+The first will show you the current settings and your graphics card, the second will just provide you with a quick summary of the GPU status, it will also verify CUDA (I think). At this point you're good to go.
+
+## 4. Updating your drivers:
+
+In case you need to update your drivers you first need to remove the old one:
+```
+sudo apt-get purge nvidia*
+```
+Then follow step one again.
 
