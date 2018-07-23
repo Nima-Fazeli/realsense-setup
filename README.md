@@ -70,6 +70,8 @@ sudo poweroff
 
 At this point you have Ubuntu 16.04, ROS, and kernel 4.13, you're ready to move on.
 
+If you need to downgrade your kernel instead of upgrade, you can follow the instruction in this (How To)[https://www.makeuseof.com/tag/upgrade-kernel-ukuu-ubuntu/]
+
 ### Software libraries
 
 The most important library is `librealsense2`, go to the [librealsense2 github page](https://github.com/IntelRealSense/librealsense/blob/master/doc/distribution_linux.md#installing-the-packages), and follow the instructions, you may need to install some additionally libraries, I'll try to make a list of the things you may need:
