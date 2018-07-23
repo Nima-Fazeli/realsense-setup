@@ -17,7 +17,7 @@ An important reference is the [ROS Wrapper for Real Sense Devices Github page](h
 ### Operating system and Kernel
 I have only been successful in getting the realsense to work reliably on `Ubuntu 16.04`, it may work on other versions (it is supposed to work on 14.04) but not sure right now. Further, the most stable version of the realsense package requires `kernel 4.13`, I use the latest `4.13`. Things should, at least in theory, also work on `4.10`.
 
-Here are two methods to get Kernel 4.13 installed (second one may be easier):
+Here are two methods to get Kernel 4.13 installed:
 
 #### Method 1 (Easier):
 
@@ -178,7 +178,7 @@ In `rviz`, you need to first specify `Global Options/Fixed Frame` as the `camera
 
 # NVIDIA Graphic Card Setup on Ubuntu
 
-If you have a fresh machine with a fancy GPU, such as a 1080TI, here are the steps to set up a new graphics card. For reference, I used (this page)[https://blog.nelsonliu.me/2017/04/29/installing-and-updating-gtx-1080-ti-cuda-drivers-on-ubuntu/]
+If you have a fresh machine with a fancy GPU, such as a 1080TI, here are the steps to set up a new graphics card. For reference, I used [this page](https://blog.nelsonliu.me/2017/04/29/installing-and-updating-gtx-1080-ti-cuda-drivers-on-ubuntu/)
 
 ## 1. Install Ubuntu
 
