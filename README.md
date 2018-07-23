@@ -197,7 +197,7 @@ The easy was is to do this:
 sudo add-apt-repository ppa:graphics-drivers/ppa
 sudo apt-get update
 ```
-The you want to go to the (Binary Driver How To for NVIDIA)[https://help.ubuntu.com/community/BinaryDriverHowto/Nvidia], and check the latest driver number, as of the date of this guide it was 390, then do this:
+The you want to go to the [Binary Driver How To for NVIDIA](https://help.ubuntu.com/community/BinaryDriverHowto/Nvidia), and check the latest driver number, as of the date of this guide it was 390, then do this:
 ```
 sudo apt-get install nvidia-390
 ```
