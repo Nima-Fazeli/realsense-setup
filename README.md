@@ -70,7 +70,17 @@ sudo poweroff
 
 At this point you have Ubuntu 16.04, ROS, and kernel 4.13, you're ready to move on.
 
-If you need to downgrade your kernel instead of upgrade, you can follow the instruction in this (How To)[https://www.makeuseof.com/tag/upgrade-kernel-ukuu-ubuntu/]
+If you need to downgrade your kernel instead of upgrade, you can follow the instruction in this [how to](https://www.makeuseof.com/tag/upgrade-kernel-ukuu-ubuntu/), but in short, you need to install the desired Kernel from ukuu, then do this:
+```
+sudo nano /etc/default/grub
+```
+Comment out the `GRUB_HIDDEN_TIMEOUT` and `GRUB_HIDDEN_TIMEOUT_QUITE` lines using `#`, then run:
+```
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+```
+Then when you reboot, in the boot selection screen in Ubuntu, select `Advanced options for Ubuntu`, then select the correct kernel you want to boot up in.
+
+You can also clean up after and remove the kernels you don't want. 
 
 ### Software libraries
 
