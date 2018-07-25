@@ -1,4 +1,3 @@
-
 #!/bin/bash
 
 # Add Intel server to the list of repositories:
