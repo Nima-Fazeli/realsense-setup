@@ -113,10 +113,10 @@ You'll need:
 I have written shell scripts for installation of these libraries, you can use:
 ```
 sudo chmod +x bash_install_opencv/install_opencv.sh && sudo bash_install_opencv/install_opencv.sh
-sudo chmod +x bash_install_pcl/install_pcl_binary_part_1.sh && sudo bash_install_opencv/install_pcl_binary_part_1.sh
-sudo chmod +x bash_install_pcl/install_pcl_binary_part_2.sh && sudo bash_install_opencv/install_pcl_binary_part_2.sh
-sudo chmod +x bash_install_rs_sdk/install_rs_sdk_part1.sh && sudo bash_install_opencv/install_rs_sdk_part1.sh
-sudo chmod +x bash_install_rs_sdk/install_rs_sdk_part2.sh && sudo bash_install_opencv/install_rs_sdk_part2.sh
+sudo chmod +x bash_install_pcl/install_pcl_binary_part_1.sh && sudo bash_install_pcl/install_pcl_binary_part_1.sh
+sudo chmod +x bash_install_pcl/install_pcl_binary_part_2.sh && sudo bash_install_pcl/install_pcl_binary_part_2.sh
+sudo chmod +x bash_install_rs_sdk/install_rs_sdk_part1.sh && sudo bash_install_rs_sdk/install_rs_sdk_part1.sh
+sudo chmod +x bash_install_rs_sdk/install_rs_sdk_part2.sh && sudo bash_install_rs_sdk/install_rs_sdk_part2.sh
 ```
 
 For more details, there is a manual way of doing it, I have a guide for that in this repository also.
