@@ -104,11 +104,24 @@ You can also download the kernel and place it in the folder you made and run it 
 
 ### Software libraries
 
-The most important library is `librealsense2`, go to the [librealsense2 github page](https://github.com/IntelRealSense/librealsense/blob/master/doc/distribution_linux.md#installing-the-packages), and follow the instructions, you may need to install some additionally libraries, I'll try to make a list of the things you may need:
+You'll need:
+
+1. OpenCV
+2. PCL
+3. librealsense2
+
+I have written shell scripts for installation of these libraries, you can use:
 ```
-sudo apt-get update 
+sudo chmod +x bash_install_opencv/install_opencv.sh && sudo bash_install_opencv/install_opencv.sh
+sudo chmod +x bash_install_pcl/install_pcl_binary_part_1.sh && sudo bash_install_opencv/install_pcl_binary_part_1.sh
+sudo chmod +x bash_install_pcl/install_pcl_binary_part_2.sh && sudo bash_install_opencv/install_pcl_binary_part_2.sh
+sudo chmod +x bash_install_rs_sdk/install_rs_sdk_part1.sh && sudo bash_install_opencv/install_rs_sdk_part1.sh
+sudo chmod +x bash_install_rs_sdk/install_rs_sdk_part2.sh && sudo bash_install_opencv/install_rs_sdk_part2.sh
 ```
-I found I did need to do something with nodelets (installing them) but it may not be necessary. 
+
+For more details, there is a manual way of doing it, I have a guide for that in this repository also.
+
+For `librealsense2`, go to the [librealsense2 github page](https://github.com/IntelRealSense/librealsense/blob/master/doc/distribution_linux.md#installing-the-packages) as a reference.
 
 IMPORTANT: I found that I needed to reboot several times during this step, so if something doesnt work, or you need to do some extra work, reboot after. There is no harm in it. Once you're done with this step do try to reboot again as well.
 
